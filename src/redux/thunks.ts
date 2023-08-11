@@ -1,4 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {driversResponse} from 'scheme/driver';
 import {imageErrorScheme, imageScheme} from 'scheme/image';
 import {AppError, handleBaseError} from 'utils/handler';
 import * as API from '../API/requests';
@@ -38,6 +39,19 @@ export const fetchImage = createAsyncThunk(
     try {
       const response = await API.getImage();
       return imageScheme.validateSync(response.data);
+    } catch (er) {
+      const error: AppError = handleBaseError(er);
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const getDrivers = createAsyncThunk(
+  'users/getDrivers',
+  async (offset: number, {rejectWithValue}) => {
+    try {
+      const response = await API.getDrivers(offset);
+      return driversResponse.validateSync(response.data);
     } catch (er) {
       const error: AppError = handleBaseError(er);
       return rejectWithValue(error);

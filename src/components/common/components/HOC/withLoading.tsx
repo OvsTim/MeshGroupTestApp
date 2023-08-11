@@ -17,12 +17,10 @@ export function withLoading<T extends Props>(
   function ComponentWithPressable(props: T) {
     return (
       <View
-        style={[
-          {
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-        ]}>
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         {props.loading ? (
           <Progress.CircleSnail color={['#DEDEDE', 'white']} />
         ) : (

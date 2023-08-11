@@ -1,9 +1,11 @@
 import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
-import Auth from '../components/AuthLayer/Auth';
+import DriverDetail from 'AuthLayer/DriverDetail';
+import DriverList from 'AuthLayer/DriverList';
 
 export type AuthStackParamList = {
-  Auth: undefined;
+  DriverList: undefined;
+  DriverDetail: {id: string};
 };
 
 const Stack = createStackNavigator<AuthStackParamList>();
@@ -16,10 +18,11 @@ declare global {
 const AuthNavigator = () => (
   <>
     <Stack.Screen
-      name={'Auth'}
-      component={Auth}
-      options={{title: 'OneScreen'}}
+      name={'DriverList'}
+      component={DriverList}
+      options={{title: 'Driver List'}}
     />
+    <Stack.Screen name={'DriverDetail'} component={DriverDetail} />
   </>
 );
 

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {AppDebugger} from 'mobile-app-debugger';
 
-export const baseUrl = 'https://api.github.com';
+export const baseUrl = 'https://ergast.com/api';
 
 export const isAppDebuggerEnabled = false;
 export const axiosApiInstance = axios.create();
