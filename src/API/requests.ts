@@ -1,4 +1,4 @@
-import {DriverResponse, Image} from './types';
+import {DriverResponse, Image, ResultsResponse} from './types';
 import {axiosApiInstance, baseUrl} from './index';
 export const PAGE_SIZE = 50;
 export const getImage = () =>
@@ -14,3 +14,14 @@ export const getDrivers = (offset: number) =>
       offset,
     },
   });
+
+export const getRacesByDriver = (offset: number, driver: string) =>
+  axiosApiInstance.get<ResultsResponse>(
+    `${baseUrl}/f1/drivers/${driver}/results.json`,
+    {
+      params: {
+        limit: PAGE_SIZE,
+        offset,
+      },
+    },
+  );

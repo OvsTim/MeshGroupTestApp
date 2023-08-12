@@ -12,40 +12,58 @@ import {
 import {Driver} from 'api/types';
 import {colors} from 'assets';
 import useAuthController from 'AuthLayer/DriverList/controller';
-import {Text} from 'common/components';
+import {Button, Text} from 'common/components';
 import dayjs from 'dayjs';
 
 type Props = {};
 const DriverList: FC<Props> = () => {
-  const {loading, driverList, loadingMore, onEndReached, onDriverPressed} =
-    useAuthController();
+  const {
+    loading,
+    driverList,
+    loadingMore,
+    onEndReached,
+    onDriverPressed,
+    onDriverRacesPressed,
+  } = useAuthController();
 
-  const renderDriver = useCallback((info: ListRenderItemInfo<Driver>) => {
-    return (
-      <View style={styles.driverContainer}>
-        <TouchableOpacity
-          onPress={() => onDriverPressed(info.item.driverId)}
-          style={styles.driverTouchable}>
-          <Text color={'black'} font={'SF24'}>
-            {`${info.item.familyName} ${info.item.givenName}`}
-          </Text>
-          <Text style={styles.nationalText} font={'SF17'} color={'grey_2'}>
-            {info.item.nationality}
-          </Text>
-          <Text font={'SF13'} color={'black'}>
-            {dayjs(info.item.dateOfBirth).format('D MMMM YYYY')}
-          </Text>
-          <Pressable
-            style={styles.urlPressable}
-            onPress={() => Linking.openURL(info.item.url)}>
-            <Text color={'blue'} style={styles.urlText} font={'SF13'}>
-              {info.item.url}
+  const renderDriver = useCallback(
+    (info: ListRenderItemInfo<Driver>) => {
+      return (
+        <View style={styles.driverContainer}>
+          <TouchableOpacity
+            onPress={() => onDriverPressed(info.item.driverId)}
+            style={styles.driverTouchable}>
+            <Text color={'black'} font={'SF24'}>
+              {`${info.item.familyName} ${info.item.givenName}`}
             </Text>
-          </Pressable>
-        </TouchableOpacity>
-      </View>
-    );
-  }, []);
+            <Text style={styles.nationalText} font={'SF17'} color={'grey_2'}>
+              {info.item.nationality}
+            </Text>
+            <Text font={'SF13'} color={'black'}>
+              {dayjs(info.item.dateOfBirth).format('D MMMM YYYY')}
+            </Text>
+            <Pressable
+              style={styles.urlPressable}
+              onPress={() => Linking.openURL(info.item.url)}>
+              <Text color={'blue'} style={styles.urlText} font={'SF13'}>
+                {info.item.url}
+              </Text>
+            </Pressable>
+            <Button
+              text={'Races'}
+              onPress={() =>
+                onDriverRacesPressed(
+                  info.item.driverId,
+                  `${info.item.familyName} ${info.item.givenName}`,
+                )
+              }
+            />
+          </TouchableOpacity>
+        </View>
+      );
+    },
+    [onDriverPressed, onDriverRacesPressed],
+  );
 
   const renderFooter = useCallback(() => {
     if (loadingMore) {
@@ -99,7 +117,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   urlPressable: {
-    marginVertical: 8,
+    marginBottom: 16,
+    marginTop: 8,
   },
   urlText: {
     textDecorationLine: 'underline',
