@@ -72,8 +72,8 @@ const RacesList: FC<Props> = () => {
         <Text style={styles.resultsText} color={'black'} font={'SF24'}>
           {'Results:'}
         </Text>
-        {info.item.Results.map(it => (
-          <>
+        {info.item.Results.map((it, index) => (
+          <View key={index}>
             <Text
               font={'SF13'}
               color={
@@ -83,7 +83,7 @@ const RacesList: FC<Props> = () => {
             <Text font={'SF13'} color={'black'}>{`Grid: ${it.grid}`}</Text>
             <Text font={'SF13'} color={'black'}>{`Laps: ${it.laps}`}</Text>
             <Text font={'SF13'} color={'black'}>{`Points: ${it.points}`}</Text>
-          </>
+          </View>
         ))}
       </View>
     );
